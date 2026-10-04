@@ -26,7 +26,10 @@ form{display:grid;gap:18px}label{font-weight:800;font-size:14px}input,select,tex
 <h1>Beställ <span>Groundstand.</span></h1>
 <p class="intro">Fyll i formuläret så kan vi behandla din beställning. Groundstand UF kostar 80 kr per styck.</p>
 <div class="price">80 kr / st</div>
-<form id="orderForm">
+<form id="orderForm" action="https://formsubmit.co/utbyouahm@skola.malmo.se" method="POST">
+<input type="hidden" name="_subject" value="Ny beställning – Groundstand UF">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_captcha" value="true">
 <div class="row">
 <label>Förnamn<input name="firstName" required autocomplete="given-name" placeholder="Ditt förnamn"></label>
 <label>Efternamn<input name="lastName" required autocomplete="family-name" placeholder="Ditt efternamn"></label>
@@ -48,8 +51,6 @@ form{display:grid;gap:18px}label{font-weight:800;font-size:14px}input,select,tex
 const q=document.getElementById('quantity');const total=document.getElementById('total');
 function updateTotal(){total.textContent=(Math.max(1,Number(q.value)||1)*80).toLocaleString('sv-SE')}
 q.addEventListener('input',updateTotal);updateTotal();
-// Temporary order handling until an email/form endpoint is connected.
-document.getElementById('orderForm').addEventListener('submit',e=>{e.preventDefault();const data=new FormData(e.target);const subject=encodeURIComponent('Beställning – Groundstand UF');const body=encodeURIComponent(`Ny beställning\n\nNamn: ${data.get('firstName')} ${data.get('lastName')}\nE-post: ${data.get('email')}\nTelefon: ${data.get('phone')||'-'}\nAntal: ${data.get('quantity')}\nTotalt: ${Number(data.get('quantity'))*80} kr\nÖvrigt: ${data.get('message')||'-'}`);window.location.href=`mailto:?subject=${subject}&body=${body}`;});
 </script>
 </body>
 </html>
